@@ -14,6 +14,7 @@ Projeto Vida - ONGs para doações.
             <div class="">
                 <h3 class="my-2">Localização</h3>
                 <form action="" method="POST">
+                    {% csrf_token %}
                     <label for="regiao" class="form-label">Escolha sua região</label>
                     <select name="regiao" id="regiao" class="form-control">
                         <option value="">Selecione um estado.</option>
@@ -47,8 +48,9 @@ Projeto Vida - ONGs para doações.
                     </select>
                     <br>
                     <label for="cidade" class="form-label">Escolha sua cidade</label>
-                    <select name="cidade" id="cidade" class="form-control">
+                    <select name="cidade" id="cidade" class="form-control mb-2">
                     </select>
+                    <button type="submit" class="btn btn-md btn-primary text-uppercase">Buscar</button>
                 </form>
                 <br>
                 <hr>
