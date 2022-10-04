@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}
+Projeto Vida
+{% endblock title %}
+{% block content %}
+<main class="container">
+    <section class="row">
+        <div class="col-12 mx-auto bg-light h-100">
+            <h1 class="my-2">Projeto Vida</h1>
+            <hr>
+            <p class="fs-3 my-2">Faça parte de um projeto que vai ajudar diversas famílias que passam fome no Brasil.</p>
+            <div class="card border-0 bg-transparent">
+                <div class="card-body d-flex gap-1">
+                    <a href="{% url 'orgs' %}" class="btn btn-md btn-success text-uppercase fw-bold w-50">Quero Doar</a>
+                    <a href="" class="btn btn-md btn-primary text-uppercase fw-bold w-50">Sou Organização</a>
+                </div>
+            </div>
+            <hr>
+            <div class="my-2">
+                <h5 class="text-uppercase fw-normal">Sobre o Projeto Vida</h5>
+                <p class="fs-5">Com a sua doação, você entrega alimento a famílias que passam por dificuldades em todo Brasil.</p>
+            </div>
+            <div class="card-group mb-3" style="display: grid; grid-template-columns: repeat(3, 1fr);">
+                <div class="card border-0 bg-transparent">
+                    <img src="https://img.freepik.com/fotos-gratis/voluntario-entregando-uma-caixa-de-doacao_23-2149230538.jpg?w=1380&t=st=1664844444~exp=1664845044~hmac=743e537956d7d2118c29bb70d9d1ceabccf44c8081186c0a790297bede276fd0" alt="" width="100px" class="card-img-top">
+                </div>
+                <div class="card border-0 bg-transparent">
+                    <img src="https://img.freepik.com/fotos-gratis/voluntario-coletando-uma-caixa-de-doacao-de-outro-voluntario_23-2149230546.jpg?w=1380&t=st=1664844731~exp=1664845331~hmac=56d2abeab36a626c0527c1e8c716e4bd18d131c3edd98497ce2460944e61d257" alt="" width="100px" class="card-img-top">
+                </div>
+                <div class="card border-0 bg-transparent">
+                    <img src="https://img.freepik.com/fotos-gratis/voluntarios-arrecadando-doacoes-de-alimentos-media_23-2149182021.jpg?w=1380&t=st=1664844749~exp=1664845349~hmac=ed28d0514c377c73f0e08957195e992a4acb0a1704e93824fdd56652f0bee89a" alt="" width="100px" class="card-img-top">
+                </div>
+                <div class="card border-0 bg-transparent">
+                    <img src="https://img.freepik.com/fotos-gratis/voluntarios-arrecadando-doacoes-de-alimentos-media_23-2149182021.jpg?w=1380&t=st=1664844749~exp=1664845349~hmac=ed28d0514c377c73f0e08957195e992a4acb0a1704e93824fdd56652f0bee89a" alt="" width="100px" class="card-img-top">
+                </div>
+                <div class="card border-0 bg-transparent">
+                    <img src="https://img.freepik.com/fotos-gratis/aproxime-se-das-coisas-de-organizacao-voluntaria-para-doacao_23-2149134484.jpg?w=740&t=st=1664849308~exp=1664849908~hmac=bdb0ceac470193549a26e41b015563ccfca2a6faba14195758e03c87d95c4684" alt="" width="100px" class="card-img-top">
+                </div>
+                <div class="card border-0 bg-transparent">
+                    <img src="https://img.freepik.com/fotos-gratis/pessoas-tiro-medio-com-doacoes-de-alimentos_23-2149142766.jpg?w=740&t=st=1664849351~exp=1664849951~hmac=60cdb910c8d3b4abf099f8f750cde4aed48ab10999d49e03f19935e7a7f1d035" alt="" width="100px" class="card-img-top">
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}
+Projeto Vida - ORGs para doações.
+{% endblock title %}
+{% block content %}
+<main class="container">
+    <section class="row">
+        <div class="col-12 mx-auto bg-light h-100">
+            <div class="d-flex align-items-center justify-content-between gap-1">
+                <h1 class="my-2">Projeto Vida</h1>
+                <a href="{% url 'index' %}" class="btn btn-md btn-primary text-uppercase">Voltar</a>
+            </div>
+            <hr>
+            <div class="">
+                <h3 class="my-2">Localização</h3>
+                <form action="" method="POST">
+                    <label for="regiao" class="form-label">Escolha sua região</label>
+                    <select name="regiao" id="regiao" class="form-control">
+                        <option value="">Selecione um estado.</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                    <br>
+                    <label for="cidade" class="form-label">Escolha sua cidade</label>
+                    <select name="cidade" id="cidade" class="form-control">
+                    </select>
+                </form>
+                <br>
+                <hr>
+                <p>Lista de ORGs para fazer doações em <span class="fw-bold text-city"></span>: </p>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}
