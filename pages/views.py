@@ -10,7 +10,7 @@ class Index(View):
         return render(request, 'src/index.html')
 
 # Tela de Registro
-class Orgs(View):
+class ONGs(View):
 
     def get(self, request):
-        return render(request, 'src/orgs.html')
+        return render(request, 'src/ongs.html')
