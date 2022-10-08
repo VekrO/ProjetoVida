@@ -9,8 +9,8 @@ class Index(View):
     def get(self, request):
         return render(request, 'src/index.html')
 
-# Tela de Registro
+# Tela de Ongs
 class ONGs(View):
 
     def get(self, request):
-        return render(request, 'src/ongs.html')
+        return render(request, 'src/orgs.html')

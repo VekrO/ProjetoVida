@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
 Projeto Vida - ONGs para doações.
 {% endblock title %}
@@ -17,7 +18,7 @@ Projeto Vida - ONGs para doações.
                     {% csrf_token %}
                     <label for="regiao" class="form-label">Escolha sua região</label>
                     <select name="regiao" id="regiao" class="form-control">
-                        <option value="">Selecione um estado.</option>
+                        <option value="Nenhum">Selecione um estado.</option>
                         <option value="AC">Acre</option>
                         <option value="AL">Alagoas</option>
                         <option value="AP">Amapá</option>
@@ -58,5 +59,22 @@ Projeto Vida - ONGs para doações.
             </div>
         </div>
     </section>
+    <section class="row">
+        <div class="col-12">
+            <div class="card-group">
+                <div class="card">
+                    <h5 class="card-title">Teste</h5>
+                    <div class="card-body">
+                        <p class="card-text">
+                            eae
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 {% endblock content %}
+{% block scripts %}
+<script src="{% static 'js/orgs.js' %}"></script>
+{% endblock scripts %}
