@@ -1,4 +1,5 @@
-from django.shortcuts import redirect, render, HttpResponse
+import os
+from django.shortcuts import redirect, render
 
 # Class Based Views
 from django.views.generic.base import View
@@ -9,6 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 
 # Messages
 from django.contrib import messages
+from projetovida.settings import BASE_DIR
 
 # User Models
 from user.models import User
@@ -54,26 +56,86 @@ class Registro(View):
             return redirect('registro')
 
 
+# Evoluir Conta
+class ContaEvoluir(View):
 
-        #ong = Ongs()
+    def get(self, request):
 
-        #ong.nome_responsavel = request.user
-        #ong.cpf_responsavel = request.POST.get('cpf_responsavel')
+        if(Ongs.objects.filter(nome_responsavel=request.user).exists()):
+            messages.warning(request, 'Você não tem permissão para acessar, você já é uma ORG!')
+            return redirect('painel')
+        else:
+            return render(request, 'src/conta-evoluir.html')
 
-        #ong.nome = request.POST.get('nome_ong')
-        #ong.descricao = request.POST.get('descricao_ong')
-        #ong.cnpj = request.POST.get('cnpj_ong')
-        #ong.email = request.POST.get('email_ong')
-        #ong.password = request.POST.get('senha_ong')
+    def post(self, request):
 
-        #if len(request.FILES) != 0:
-        #    ong.logo = request.FILES.get('logo_ong')
+        ong = Ongs()
+        if len(request.FILES) != 0:
+            ong.logo = request.FILES.get('logo')
         
-        #ong.save()
+        try:
+            ong.nome_responsavel = request.user
+            ong.cpf_responsavel = request.POST.get('cpf')
+            ong.nome = request.POST.get('nome')
+            ong.descricao = request.POST.get('descricao')
+            ong.cnpj = request.POST.get('CNPJ')
+            ong.email = request.POST.get('email')
+            ong.save()
 
-        return redirect('index')
+            # Adicioanar usuário como ORG.
+            User.objects.update(is_org=True)
 
-# Tela de Login
+            messages.success(request, 'Sua conta agora é profissional.')
+            return redirect('painel')
+
+        except Exception as e:
+            return render(request, 'src/conta-evoluir.html', {
+            'nome': request.POST.get('nome'), 
+            'email': request.POST.get('email'), 
+            'cpf_responsavel': request.POST.get('cpf'),
+            'descricao': request.POST.get('descricao'),
+            'cnpj': request.POST.get('CNPJ'),
+            'logo': request.FILES.get('logo')
+        })
+
+# Update Conta
+class ContaUpdate(View):
+
+    def get(self, request):
+        ong = Ongs.objects.get(nome_responsavel=request.user)
+        context = {
+            'nome': ong.nome,
+            'email': ong.email,
+            'cpf_responsavel': ong.cpf_responsavel,
+            'descricao': ong.descricao,
+            'cnpj': ong.cnpj,
+            'logo': ong.logo
+        }
+        return render(request, 'src/conta-update.html', context)
+    
+    def post(self, request):
+
+        # Substituir imagem antiga.
+        ong = Ongs.objects.get(nome_responsavel=request.user)
+        ong.logo = request.FILES.get('logo')
+        ong.save()
+        
+        try:
+            Ongs.objects.filter(nome_responsavel=request.user).update(
+                cpf_responsavel=request.POST.get('cpf'), 
+                nome=request.POST.get('nome'),
+                descricao=request.POST.get('descricao'),
+                cnpj=request.POST.get('CNPJ'),
+                email=request.POST.get('email'),
+            )
+            messages.success(request, 'Conta profissional atualizada com sucesso!')
+            return redirect('painel')
+        except Exception as e:
+            print(e)
+            messages.warning(request, 'Houve um erro ao tentar fazer atualização de dados.')
+            return redirect('conta-update')
+
+# Tela de Logins
 class Login(View):
 
     def get(self, request):
@@ -106,3 +168,8 @@ class Logout(View):
         logout(request)
         messages.error(request, "Você saiu, conecte-se novamente!")
         return redirect('login')
+
+class Painel(View):
+
+    def get(self, request):
+        return render(request, 'src/painel.html')
