@@ -32,22 +32,8 @@
                             <i class="fa-solid fa-user"></i>
                             <small class="mx-3">{{ request.user.email }}</small>
                         </div>
-                        <p class="my-3">
-                            <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                <i class="fa-sharp fa-solid fa-gear"></i>
-                            </button>
-                        </p>
-                        <div class="collapse" id="collapseExample">
-                        {% if request.user.is_org %}
-                        <div class="card card-body">
-                            <a href="{% url 'conta-update' %}" class="text-decoration-none">Atualizar configurações da ORG.</a>
-                        </div>
-                        {% else %}
-                        <div class="card card-body">
-                            <a href="{% url 'conta-evoluir' %}" class="text-decoration-none">Evoluir conta para ONG.</a>
-                        </div>
-                        {% endif %}
-                        </div>
+                        <a href="{% url 'conta-update' request.user.pk %}" class="btn btn-sm btn-primary w-25">Atualizar conta.</a>
+                        
                     </div>
                 </div>
             </div>

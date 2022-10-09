@@ -36,10 +36,17 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True
     )
-    is_org = models.BooleanField(default=False)
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+
+    # Configurações de ONG.
+    is_org = models.BooleanField(default=False)
+    cpf = models.CharField(max_length=14, null=True, blank=False, verbose_name="CPF")
+    cnpj = models.CharField(max_length=14, null=True, blank=False, verbose_name="CNPJ")
+    telefone = models.CharField(max_length=13, null=True, blank=False, verbose_name="Telefone")
+    logo = models.ImageField(upload_to='fotos/', null=True, blank=False, verbose_name="Imagem")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nome',]

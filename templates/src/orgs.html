@@ -11,65 +11,25 @@ Projeto Vida - ONGs para doações.
                 <h1 class="my-2">Projeto Vida</h1>
                 <a href="{% url 'index' %}" class="btn btn-md btn-primary text-uppercase">Voltar</a>
             </div>
-            <hr>
-            <div class="">
-                <h3 class="my-2">Localização</h3>
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <label for="regiao" class="form-label">Escolha sua região</label>
-                    <select name="regiao" id="regiao" class="form-control">
-                        <option value="Nenhum">Selecione um estado.</option>
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
-                    </select>
-                    <br>
-                    <label for="cidade" class="form-label">Escolha sua cidade</label>
-                    <select name="cidade" id="cidade" class="form-control mb-2">
-                    </select>
-                    <button type="submit" class="btn btn-md btn-primary text-uppercase">Buscar</button>
-                </form>
-                <br>
-                <hr>
-                <p>Lista de ONGs para fazer doações na cidade <span class="fw-bold text-city"></span>: </p>
-            </div>
         </div>
     </section>
     <section class="row">
-        <div class="col-12">
-            <div class="card-group">
-                <div class="card">
-                    <h5 class="card-title">Teste</h5>
-                    <div class="card-body">
-                        <p class="card-text">
-                            eae
-                        </p>
+        <div class="col-12 bg-light">
+            <small class="fs-5 text-muted">Lista de ONGs para doações.</small>
+            <div class="card-group my-4">
+                {% for ong in ongs %}
+                <div class="card d-flex align-items-center justify-content-center p-3">
+                    <img src="/media/{{ ong.logo }}" alt="Logo da ONG {{ ong.nome }}" class="card-img-top w-25">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ ong.nome }}</h5>
+                        <div class="d-flex mt-2">
+                            <a href="https://wa.me/{{ong.telefone}}?text=Oi%2C+encontrei+o+site+do+Projeto+Vida+e+quero+realizar+uma+doa%C3%A7%C3%A3o.+Como+fa%C3%A7o%3F" target="_blank" class="btn btn-md btn-success d-flex align-items-center justify-content-center gap-2">Entrar em contato 
+                                <i class="fa-brands fa-whatsapp fs-2"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </section>
