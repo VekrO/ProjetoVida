@@ -9,15 +9,8 @@ from user.models import User
 class Index(View):
 
     def get(self, request):
-        return render(request, 'src/index.html')
-
-# Tela de Ongs
-class ONGs(View):
-
-    def get(self, request):
         ongs = User.objects.all()
-        return render(request, 'src/orgs.html', {'ongs': ongs})
-    
+        return render(request, 'src/index.html', {'ongs': ongs, 'ong_count': ongs.count()})
 
 
             

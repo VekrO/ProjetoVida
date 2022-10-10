@@ -42,11 +42,10 @@ class User(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
 
     # Configurações de ONG.
-    is_org = models.BooleanField(default=False)
-    cpf = models.CharField(max_length=14, null=True, blank=False, verbose_name="CPF")
     cnpj = models.CharField(max_length=14, null=True, blank=False, verbose_name="CNPJ")
+    descricao = models.TextField(default="Sua ajuda pode mudar muitas vidas. A sua ajuda pode mudar muitas vidas, nós trabalhamos pra isso!", max_length=175)
     telefone = models.CharField(max_length=13, null=True, blank=False, verbose_name="Telefone")
-    logo = models.ImageField(upload_to='fotos/', null=True, blank=False, verbose_name="Imagem")
+    logo = models.ImageField(upload_to='fotos/', default='fotos/default.jpg', null=True, blank=True, verbose_name="Imagem")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nome',]

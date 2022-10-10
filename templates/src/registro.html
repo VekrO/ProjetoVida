@@ -1,51 +1,210 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block title %}Projeto Vida - Criar uma nova conta{% endblock title %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Projeto Vida - Faça o registro da sua ONG</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free Website Template" name="keywords">
+        <meta content="Free Website Template" name="description">
 
-<main class="container">
-    <section class="row">
-        <div class="col-12 mx-auto bg-light vh-100 p-5">
-            <div class="my-5">
-                <h2 class="my-2">Projeto Vida - Crie uma conta</h2>
-                <hr>
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="{% static 'lib/flaticon/font/flaticon.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- Top Bar Start -->
+        <div class="top-bar d-none d-md-block">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="top-bar-left">
+                            <div class="text">
+                                <i class="fa fa-phone-alt"></i>
+                                <p>+123 456 7890</p>
+                            </div>
+                            <div class="text">
+                                <i class="fa fa-envelope"></i>
+                                <p>info@example.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="top-bar-right">
+                            <div class="social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            {% if messages %}
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            {% endif %}
-            <form action="" method="post" class="my-3" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group mb-3">
-                    <label for="nome">Nome</label>
-                    <input name="nome" id="nome" type="text" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="email">E-mail</label>
-                    <input name="email" id="email" type="email" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="password">Senha</label>
-                    <input name="password" id="password" type="password" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="passwordc">Confirme a senha</label>
-                    <input name="passwordc" id="passwordc" type="password" class="form-control">
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <button type="submit" class="btn btn-primary btn-md">Confirmar</button>
-                    <a href="{% url 'login' %}" class="text-decoration-none">Já tenho conta.</a>
-                </div>
-            </form>
         </div>
-    </section>
-</main>
+        <!-- Top Bar End -->
 
-{% endblock content %}
+        <!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">Projeto Vida</a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-{% block scripts %}
-<script src="{% static 'js/registro.js' %}"></script>
-{% endblock scripts %}
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto">
+                        <a href="{% url 'index' %}" class="nav-item nav-link">Início</a>
+                        <a href="#about" class="nav-item nav-link">Sobre</a>
+                        <a href="#blog" class="nav-item nav-link">Blog</a>
+                        <a href="#contact" class="nav-item nav-link">Contato</a>
+                        <a href="{% url 'login' %}" class="nav-item nav-link">Login de ONG</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Nav Bar End -->
+        
+        
+        <!-- Page Header Start -->
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Registro da ONG</h2>
+                    </div>
+                    <div class="col-12">
+                        <a href="">Início</a>
+                        <a href="">Registro da ONG</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header End -->
+        
+        
+        <!-- Contact Start -->
+        <div class="contact">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>Vamos criar uma conta para sua ONG</p>
+                    <h2>Informações Da ONG</h2>
+                </div>
+                <div class="contact-img">
+                    <img src="{% static 'img/contact.jpg' %}" alt="Image">
+                </div>
+                <div class="contact-form">
+                        {% for message in messages %}
+                        <div id="success" class="alert {{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                        <form action="" method="POST" novalidate="novalidate" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="control-group">
+                                <label for="password">Nome da ONG<sup class="text-danger">*</sup></label>
+                                <input type="text" class="form-control" name="nome" placeholder="Nome" required="required" data-validation-required-message="Digite seu nome" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <label for="password">E-mail da ONG<sup class="text-danger">*</sup></label>
+                                <input type="email" class="form-control" name="email" placeholder="E-mail" required="required" data-validation-required-message="Digite seu e-mail" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <label for="password">CNPJ da ONG<sup class="text-danger">*</sup></label>
+                                <input type="text" class="form-control" name="CNPJ" placeholder="CNPJ" maxlength="14" required="required" data-validation-required-message="Digite seu CNPJ" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <label for="password">Senha para Login<sup class="text-danger">*</sup></label>
+                                <input type="password" class="form-control" name="password" placeholder="Senha" required="required" data-validation-required-message="Digite sua senha" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <label for="tel">Telefone para contato com doadores<sup class="text-danger">*</sup></label>
+                                <input type="tel" class="form-control" name="telefone" maxlength="13" placeholder="Telefone" required="required" data-validation-required-message="Digite seu telefone" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <textarea class="form-control" maxlength="175" name="descricao" id="descricao" placeholder="Descreva um pouco suas atividades..." required="required" data-validation-required-message="Descreva um pouco suas atividades."></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div>
+                                <button class="btn btn-custom" type="submit" id="sendMessageButton">Confirmar</button>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        </div>
+        <!-- Contact End -->
+
+
+        <!-- Footer Start -->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-contact">
+                            <h2>Nossa Sede</h2>
+                            <p><i class="fa fa-map-marker-alt"></i>123 Rua, Cidade, País</p>
+                            <p><i class="fa fa-phone-alt"></i>+333 333 33333</p>
+                            <p><i class="fa fa-envelope"></i>info@example.com</p>
+                            <div class="footer-social">
+                                <a class="btn btn-custom" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-youtube"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container copyright">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>&copy; <a href="#">Projeto Vida</a>, All Right Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+        <!-- Back to top button -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <!-- Pre Loader -->
+        <div id="loader" class="show">
+            <div class="loader"></div>
+        </div>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+        <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+        <script src="{% static 'lib/parallax/parallax.min.js' %}"></script>
+        
+        <!-- Contact Javascript File -->
+        <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
+        <script src="{% static 'mail/contact.js' %}"></script>
+
+        <!-- Template Javascript -->
+        <script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>

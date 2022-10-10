@@ -1,57 +1,490 @@
-{% extends 'base.html' %}
-{% block title %}
-Projeto Vida
-{% endblock title %}
-{% block content %}
-<main class="container">
-    <section class="row">
-        <div class="col-12 mx-auto bg-light h-100">
-            <div class="d-flex align-items-center justify-content-between">
-                <h1 class="my-2">Projeto Vida</h1>
-                {% if request.user.is_authenticated %}
-                    <div>
-                        <a href="{% url 'painel' %}" class="btn btn-primary btn-md">Painel</a>
-                        <a href="{% url 'logout' %}" class="btn btn-danger btn-md">Sair</a>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Projeto Vida - Faça a mudança nas vidas que precisam</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free Website Template" name="keywords">
+        <meta content="Free Website Template" name="description">
+
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="{% static 'lib/flaticon/font/flaticon.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- Top Bar Start -->
+        <div class="top-bar d-none d-md-block">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="top-bar-left">
+                            <div class="text">
+                                <i class="fa fa-phone-alt"></i>
+                                <p>+123 456 7890</p>
+                            </div>
+                            <div class="text">
+                                <i class="fa fa-envelope"></i>
+                                <p>info@example.com</p>
+                            </div>
+                        </div>
                     </div>
-                {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-md btn-primary">Entrar</a>
-                {% endif %}
-            </div>
-            <hr>
-            <p class="fs-3 my-2">Faça parte de um projeto que vai ajudar diversas famílias que passam fome no Brasil.</p>
-            <div class="card border-0 bg-transparent">
-                <div class="card-body d-flex gap-1">
-                    <a href="{% url 'ongs' %}" class="btn btn-md btn-success text-uppercase fw-bold">Quero Doar</a>
-                </div>
-            </div>
-            <hr>
-            <div class="my-2">
-                <h5 class="text-uppercase fw-normal">Sobre o Projeto Vida</h5>
-                <p class="fs-5">Com a sua doação, você entrega alimento a famílias que passam por dificuldades em todo Brasil.</p>
-            </div>
-            <div class="card-group mb-3" style="display: grid; grid-template-columns: repeat(3, 1fr);">
-                <div class="card border-0 bg-transparent">
-                    <img src="https://img.freepik.com/fotos-gratis/voluntario-entregando-uma-caixa-de-doacao_23-2149230538.jpg?w=1380&t=st=1664844444~exp=1664845044~hmac=743e537956d7d2118c29bb70d9d1ceabccf44c8081186c0a790297bede276fd0" alt="" width="100px" class="card-img-top">
-                </div>
-                <div class="card border-0 bg-transparent">
-                    <img src="https://img.freepik.com/fotos-gratis/voluntario-coletando-uma-caixa-de-doacao-de-outro-voluntario_23-2149230546.jpg?w=1380&t=st=1664844731~exp=1664845331~hmac=56d2abeab36a626c0527c1e8c716e4bd18d131c3edd98497ce2460944e61d257" alt="" width="100px" class="card-img-top">
-                </div>
-                <div class="card border-0 bg-transparent">
-                    <img src="https://img.freepik.com/fotos-gratis/voluntarios-arrecadando-doacoes-de-alimentos-media_23-2149182021.jpg?w=1380&t=st=1664844749~exp=1664845349~hmac=ed28d0514c377c73f0e08957195e992a4acb0a1704e93824fdd56652f0bee89a" alt="" width="100px" class="card-img-top">
-                </div>
-                <div class="card border-0 bg-transparent">
-                    <img src="https://img.freepik.com/fotos-gratis/voluntarios-arrecadando-doacoes-de-alimentos-media_23-2149182021.jpg?w=1380&t=st=1664844749~exp=1664845349~hmac=ed28d0514c377c73f0e08957195e992a4acb0a1704e93824fdd56652f0bee89a" alt="" width="100px" class="card-img-top">
-                </div>
-                <div class="card border-0 bg-transparent">
-                    <img src="https://img.freepik.com/fotos-gratis/aproxime-se-das-coisas-de-organizacao-voluntaria-para-doacao_23-2149134484.jpg?w=740&t=st=1664849308~exp=1664849908~hmac=bdb0ceac470193549a26e41b015563ccfca2a6faba14195758e03c87d95c4684" alt="" width="100px" class="card-img-top">
-                </div>
-                <div class="card border-0 bg-transparent">
-                    <img src="https://img.freepik.com/fotos-gratis/pessoas-tiro-medio-com-doacoes-de-alimentos_23-2149142766.jpg?w=740&t=st=1664849351~exp=1664849951~hmac=60cdb910c8d3b4abf099f8f750cde4aed48ab10999d49e03f19935e7a7f1d035" alt="" width="100px" class="card-img-top">
+                    <div class="col-md-4">
+                        <div class="top-bar-right">
+                            <div class="social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-</main>
-{% endblock content %}
+        <!-- Top Bar End -->
 
-{% block scripts %}{% endblock scripts %}
+        <!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">Projeto Vida</a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto">
+                        <a href="" class="nav-item nav-link active">Início</a>
+                        <a href="#about" class="nav-item nav-link">Sobre</a>
+                        <a href="#blog" class="nav-item nav-link">Blog</a>
+                        <a href="#contact" class="nav-item nav-link">Contato</a>
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'painel' %}" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+                        <a href="{% url 'logout' %}" class="nav-item nav-link">Sair</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="nav-item nav-link">Sou ONG</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Nav Bar End -->
+
+
+        <!-- Carousel Start -->
+        <div class="carousel">
+            <div class="container-fluid">
+                <div class="owl-carousel">
+                    <div class="carousel-item">
+                        <div class="carousel-img">
+                            <img src="{% static 'img/carousel-1.jpg' %}" alt="Image">
+                        </div>
+                        <div class="carousel-text">
+                            <h1>Vamos ser gentis com as crianças</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet elit. Phasellus ut mollis mauris. Vivamus egestas eleifend dui ac consequat at lectus in malesuada
+                            </p>
+                            <div class="carousel-btn">
+                                <a class="btn btn-custom" href="">Doar Agora</a>
+                                <a class="btn btn-custom btn-play" data-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-target="#videoModal">Assistir Vídeo</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-img">
+                            <img src="{% static 'img/carousel-2.jpg' %}" alt="Image">
+                        </div>
+                        <div class="carousel-text">
+                            <h1>Envolva-se com a mão amiga</h1>
+                            <p>
+                                Morbi sagittis turpis id suscipit feugiat. Suspendisse eu augue urna. Morbi sagittis, orci sodales varius fermentum, tortor
+                            </p>
+                            <div class="carousel-btn">
+                                <a class="btn btn-custom" href="">Doar Agora</a>
+                                <a class="btn btn-custom btn-play" data-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-target="#videoModal">Assistir Vídeo</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-img">
+                            <img src="{% static 'img/carousel-3.jpg' %}" alt="Image">
+                        </div>
+                        <div class="carousel-text">
+                            <h1>Trazendo sorrisos para milhões</h1>
+                            <p>
+                                Sed ultrices, est eget feugiat accumsan, dui nibh egestas tortor, ut rhoncus nibh ligula euismod quam. Proin pellentesque odio
+                            </p>
+                            <div class="carousel-btn">
+                                <a class="btn btn-custom" href="">Doar Agora</a>
+                                <a class="btn btn-custom btn-play" data-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-target="#videoModal">Assistir Vídeo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Carousel End -->
+
+        <!-- Video Modal Start-->
+        <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>        
+                        <!-- 16:9 aspect ratio -->
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="" id="video"  allowscriptaccess="always" allow="autoplay"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!-- Video Modal End -->
+        
+
+        <!-- About Start -->
+        <div class="about" id="about">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="about-img" data-parallax="scroll" data-image-src="{% static 'img/about.jpg' %}"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="section-header">
+                            <p>Sobre nós</p>
+                            <h2>Organização mundial sem fins lucrativos de caridade</h2>
+                        </div>
+                        <div class="about-tab">
+                            <ul class="nav nav-pills nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="pill" href="#tab-content-1">Sobre</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#tab-content-2">Missão</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#tab-content-3">Visão</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="tab-content-1" class="container tab-pane active">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae pellentesque turpis. Donec in hendrerit dui, vel blandit massa. Ut vestibulum suscipit cursus. Cras quis porta nulla, ut placerat risus. Aliquam nec magna eget velit luctus dictum. Phasellus et felis sed purus tristique dignissim. Morbi sit amet leo at purus accumsan pellentesque. Vivamus fermentum nisi vel dapibus blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </div>
+                                <div id="tab-content-2" class="container tab-pane fade">
+                                    Sed tincidunt, magna ut vehicula volutpat, turpis diam condimentum justo, posuere congue turpis massa in mi. Proin ornare at massa at fermentum. Nunc aliquet sed nisi iaculis ornare. Nam semper tortor eget est egestas, eu sagittis nunc sodales. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent bibendum sapien sed purus molestie malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </div>
+                                <div id="tab-content-3" class="container tab-pane fade">
+                                    Aliquam dolor odio, mollis sed feugiat sit amet, feugiat ut sapien. Nunc eu dignissim lorem. Suspendisse at hendrerit enim. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed condimentum semper turpis vel facilisis. Nunc vel faucibus orci. Mauris ut mauris rhoncus, efficitur nisi at, venenatis quam. Praesent egestas pretium enim sit amet finibus. Curabitur at erat molestie, tincidunt lorem eget, consequat ligula.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
+
+
+        <!-- Service Start -->
+        <div class="service">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>O que fazemos?</p>
+                    <h2>Acreditamos que podemos salvar mais vidas com você</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="flaticon-diet"></i>
+                            </div>
+                            <div class="service-text">
+                                <h3>Comida Saudável</h3>
+                                <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="flaticon-water"></i>
+                            </div>
+                            <div class="service-text">
+                                <h3>Água Pura</h3>
+                                <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="flaticon-healthcare"></i>
+                            </div>
+                            <div class="service-text">
+                                <h3>Assistência médica</h3>
+                                <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="flaticon-education"></i>
+                            </div>
+                            <div class="service-text">
+                                <h3>Educação de Primeira</h3>
+                                <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="flaticon-home"></i>
+                            </div>
+                            <div class="service-text">
+                                <h3>Residências</h3>
+                                <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="flaticon-social-care"></i>
+                            </div>
+                            <div class="service-text">
+                                <h3>Assistência social</h3>
+                                <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Service End -->
+        
+        
+        <!-- Facts Start -->
+        <div class="facts" data-parallax="scroll" data-image-src="{% static 'img/facts.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mx-auto">
+                        <div class="facts-item">
+                            <i class="flaticon-home"></i>
+                            <div class="facts-text">
+                                <h3 class="facts-plus" data-toggle="counter-up">{{ ong_count }}</h3>
+                                <p>ONGs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Facts End -->
+        
+        
+        <!-- Causes Start -->
+        <div class="causes">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>ONGs populares</p>
+                    <h2>Conheça algumas ONGs</h2>
+                </div>
+                <div class="owl-carousel causes-carousel">
+                    {% for ong in ongs %}
+                    <div class="causes-item">
+                        <div class="causes-img">
+                            <img src="{{ ong.logo.url }}" alt="Image">
+                        </div>
+                        <div class="causes-text mt-4">
+                            <h3>{{ ong.nome }}</h3>
+                            <p>{{ ong.descricao }}</p>
+                        </div>
+                        <div class="causes-btn">
+                            <a class="btn btn-custom">Conhecer</a>
+                            <a target="_blank" href="https://api.whatsapp.com/send?phone={{ ong.telefone }}&text=Conheci essa ONG através do Projeto Vida, gostaria de ajudar! Como faço ?" class="btn btn-custom">Ajudar Agora</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Causes End -->
+        
+        <!-- Contact Start -->
+        <div class="contact" id="contact">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>Contato</p>
+                    <h2>Mande uma mensagem</h2>
+                </div>
+                <div class="contact-img">
+                    <img src="{% static 'img/contact.jpg' %}" alt="Image">
+                </div>
+                <div class="contact-form">
+                        <div id="success"></div>
+                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                            <div class="control-group">
+                                <input type="text" class="form-control" id="name" placeholder="Seu nome" required="required" data-validation-required-message="Digite seu nome" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <input type="email" class="form-control" id="email" placeholder="Seu e-mail" required="required" data-validation-required-message="Digite seu e-mail" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <input type="text" class="form-control" id="subject" placeholder="Assunto" required="required" data-validation-required-message="Digite o assunto" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <textarea class="form-control" id="message" placeholder="Mensagem" required="required" data-validation-required-message="Digite a mensagem"></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div>
+                                <button class="btn btn-custom" type="submit" id="sendMessageButton">Enviar mensagem</button>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        </div>
+        <!-- Contact End -->
+
+
+        <!-- Blog Start -->
+        <div class="blog" id="blog">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>Blog</p>
+                    <h2>Notícias recentes sobre nossas atividades</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="blog-item">
+                            <div class="blog-img">
+                                <img src="{% static 'img/blog-1.jpg' %}" alt="Image">
+                            </div>
+                            <div class="blog-text">
+                                <h3><a href="#">Lorem ipsum dolor sit</a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet elit. Neca pretim miura bitur facili ornare velit non vulpte liqum metus tortor
+                                </p>
+                            </div>
+                            <div class="blog-meta">
+                                <p><i class="fa fa-user"></i><a href="">Admin</a></p>
+                                <p><i class="fa fa-comments"></i><a href="">15 Comments</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog-item">
+                            <div class="blog-img">
+                                <img src="{% static 'img/blog-2.jpg' %}" alt="Image">
+                            </div>
+                            <div class="blog-text">
+                                <h3><a href="#">Lorem ipsum dolor sit</a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet elit. Neca pretim miura bitur facili ornare velit non vulpte liqum metus tortor
+                                </p>
+                            </div>
+                            <div class="blog-meta">
+                                <p><i class="fa fa-user"></i><a href="">Admin</a></p>
+                                <p><i class="fa fa-comments"></i><a href="">15 Comments</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog-item">
+                            <div class="blog-img">
+                                <img src="{% static 'img/blog-3.jpg' %}" alt="Image">
+                            </div>
+                            <div class="blog-text">
+                                <h3><a href="#">Lorem ipsum dolor sit</a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet elit. Neca pretim miura bitur facili ornare velit non vulpte liqum metus tortor
+                                </p>
+                            </div>
+                            <div class="blog-meta">
+                                <p><i class="fa fa-user"></i><a href="">Admin</a></p>
+                                <p><i class="fa fa-comments"></i><a href="">15 Comments</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Blog End -->
+
+
+        <!-- Footer Start -->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-contact">
+                            <h2>Nossa Sede</h2>
+                            <p><i class="fa fa-map-marker-alt"></i>123 Rua, Cidade, País</p>
+                            <p><i class="fa fa-phone-alt"></i>+333 333 33333</p>
+                            <p><i class="fa fa-envelope"></i>info@example.com</p>
+                            <div class="footer-social">
+                                <a class="btn btn-custom" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-youtube"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container copyright">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>&copy; <a href="#">Projeto Vida</a>, All Right Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+        
+        <!-- Back to top button -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <!-- Pre Loader -->
+        <div id="loader" class="show">
+            <div class="loader"></div>
+        </div>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+        <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+        <script src="{% static 'lib/parallax/parallax.min.js' %}"></script>
+        
+        <!-- Contact Javascript File -->
+        <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
+        <script src="{% static 'mail/contact.js' %}"></script>
+
+        <!-- Template Javascript -->
+        <script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>

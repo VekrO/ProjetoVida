@@ -16,7 +16,6 @@ from projetovida.settings import BASE_DIR
 
 # User Models
 from user.models import User
-from django.contrib.auth.forms import UserChangeForm
 
 # Tela de Registro
 class Registro(View):
@@ -33,6 +32,8 @@ class Registro(View):
         # Criar um cadastro para usuários.
         nome = request.POST.get('nome')
         email = request.POST.get('email')
+        cnpj = request.POST.get('CNPJ')
+        telefone = request.POST.get('telefone')
         password = request.POST.get('password')
 
         if(len(str(nome)) == 0 or len(str(email)) == 0 or len(str(password)) == 0):
@@ -44,15 +45,22 @@ class Registro(View):
         try:
             if(User.objects.filter(email=email).first()):
                 messages.warning(request, 'E-mail já está em uso.')
-                return redirect('registro')
+                if(User.objects.filter(telefone=telefone).first()):
+                    messages.warning(request, 'O telefone já está em uso.')
+                    if(User.objects.filter(cnpj=cnpj).first()):
+                        messages.warning(request, 'O CNPJ já está em uso.')
             else:
                 user.nome = nome
                 user.email = email
+                user.cnpj = cnpj
+                user.telefone = telefone
                 user.set_password(password)
                 user.save()
 
                 # Executa o login.
-                return render(request, 'src/login.html', {'email': email, 'password':password})
+                messages.success(request, 'Conta registrada com sucesso, faça login!')
+                return redirect('login')
+            return redirect('registro')
 
         except Exception as e:
             messages.error(request, e)
@@ -95,7 +103,63 @@ class Logout(View):
 class Painel(LoginRequiredMixin, View):
 
     def get(self, request):
-        return render(request, 'src/painel.html')
+
+        # Verificar se a conta tem logo.
+        user = User.objects.get(pk=request.user.pk)
+        if(user.logo):
+            if(user.logo.name == 'fotos/default.jpg'):
+                # Adicionar uma mensagem para que o usuário possa atualizar a imagem dele.
+                return render(request, 'src/painel.html', {'message': 'Você está usando a imagem padrão de logo, coloque outra!'})
+
+        # Receber dados.
+        dados = User.objects.get(pk=request.user.pk)
+        return render(request, 'src/painel.html', {'dado': dados})
+    
+    def post(self, request):
+
+        # Alterar apenas a LOGO.
+        if(len(request.FILES) != 0):
+            # Salva a Logo Nova.
+            logo = request.FILES.get('logo')
+            # Instânciar o usuário.
+            user = User.objects.get(pk=request.user.pk)
+            # Adicionar nova Logo
+            user.logo = logo
+            # Salvar os dados.
+            user.save()
+            # Retorna ao painel.
+            messages.success(request, 'Conta atualizada com sucesso.')
+            return redirect('painel')
+
+        # Verificar se os dados são do usuário conectado.
+        user = User.objects.get(pk=request.user.pk)
+        if(request.user.nome == request.POST.get('nome')):
+            messages.warning(request, 'Você está usando esse nome!')
+            return redirect('painel')
+        else:
+            user.nome=request.POST.get('nome')
+            
+        if(request.user.email == request.POST.get('email')):
+            messages.warning(request, 'Você está usando esse e-mail!')
+            return redirect('painel')
+        else:
+            user.email=request.POST.get('email')
+            
+        if(request.user.telefone == request.POST.get('telefone')):
+            messages.warning(request, 'Você está usando esse Telefone!')
+            return redirect('painel')
+        else:
+            user.telefone=request.POST.get('telefone')
+
+        if(request.user.cnpj == request.POST.get('cnpj')):
+            messages.warning(request, 'Você está usando esse CNPJ!')
+            return redirect('painel')
+        else:
+            user.cnpj=request.POST.get('cnpj')
+
+        user.save()
+        messages.success(request, 'Conta atualizada com sucesso!')
+        return redirect('painel')
 
 # Conta update
 class ContaUpdate(LoginRequiredMixin, UpdateView):
@@ -108,14 +172,16 @@ class ContaUpdate(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         # Remover imagem.
         user = User.objects.get(pk=self.request.user.pk)
-        old_image = user.logo.url
+        old_image = user.logo
         user.is_org = True
-        user.save()
 
-        # Remove imagem antiga.
-        os.remove('{}{}'.format(BASE_DIR, old_image))
-
-        # Confirma
+        # Verificar se a imagem já existe no banco de dados.
+        if(os.path.exists('{}{}'.format(BASE_DIR, user.logo.url))):
+            # Removo a imagem que já existe e crio uma nova.
+            os.remove('{}{}'.format(BASE_DIR, user.logo.url))
+        else:
+            if(os.path.exists('{}{}'.format(BASE_DIR, user.logo.url))):
+                print('Já está sendo usada. ')
+        
         messages.success(self.request, 'Conta atualizada com sucesso!')
-
         return super().form_valid(form)

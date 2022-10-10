@@ -1,45 +1,229 @@
-{% extends 'base.html' %}
-{% block title %}Projeto Vida - Painel{% endblock title %}
-{% block content %}
-<main class="container-fluid">
-    <section class="row">
-        <div class="col-12 mx-auto bg-light vh-100">
-            {% if messages %}
-            {% for message in messages %}
-                <div class="alert {{ message.tags }} mt-1">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            {% endif %}
-            <div class="mt-3 card rounded-0">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h5 class="card-title">
-                            Painel
-                        </h5>
-                        <div>
-                            <a href="{% url 'index' %}" class="btn btn-primary btn-md">Voltar</a>
-                            <a href="{% url 'logout' %}" class="btn btn-danger btn-md">Sair</a>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Projeto Vida - Faça a mudança nas vidas que precisam</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free Website Template" name="keywords">
+        <meta content="Free Website Template" name="description">
+
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="{% static 'lib/flaticon/font/flaticon.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- Top Bar Start -->
+        <div class="top-bar d-none d-md-block">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="top-bar-left">
+                            <div class="text">
+                                <i class="fa fa-phone-alt"></i>
+                                <p>+123 456 7890</p>
+                            </div>
+                            <div class="text">
+                                <i class="fa fa-envelope"></i>
+                                <p>info@example.com</p>
+                            </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="info d-flex flex-column">
-                        <div class="d-flex">
-                            <i class="fa-solid fa-envelope"></i>
-                            <small class="mx-3">{{ request.user.nome }}</small>
+                    <div class="col-md-4">
+                        <div class="top-bar-right">
+                            <div class="social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                            </div>
                         </div>
-                        <div class="d-flex">
-                            <i class="fa-solid fa-user"></i>
-                            <small class="mx-3">{{ request.user.email }}</small>
-                        </div>
-                        <a href="{% url 'conta-update' request.user.pk %}" class="btn btn-sm btn-primary w-25">Atualizar conta.</a>
-                        
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</main>
-{% endblock content %}
-{% block scripts %}
-{% endblock scripts %}
+        <!-- Top Bar End -->
+
+        <!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">Projeto Vida</a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto">
+                        <a href="{% url 'index' %}" class="nav-item nav-link active">Voltar</a>
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'painel' %}" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+                        <a href="{% url 'logout' %}" class="nav-item nav-link">Sair</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="nav-item nav-link">Sou ONG</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Nav Bar End -->
+        
+        
+        <!-- Page Header Start -->
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Painel</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header End -->
+        
+        
+        <!-- Event Start -->
+        <div class="event">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>Painel</p>
+                    <h2>Edite suas informações</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="event-item">
+                            <div class="event-content">
+                                <div class="event-text">
+                                    {% if message %}
+                                    <div class="alert alert-warning">
+                                        {{ message }}
+                                    </div>
+                                    <form action="" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="control-group">
+                                            <label for="logo">Adicione uma Logo</label>
+                                            <input type="file" name="logo" id="logo" class="form-control h-25">
+                                        </div>
+                                        <button type="submit" class="btn btn-custom">Confirmar</button>
+                                    </form>
+                                    {% else %}
+                                    {% for message in messages %}
+                                     <div class="alert {{ message.tags }}">
+                                        {{ message }}
+                                     </div>
+                                    {% endfor %}
+                                    <h3>Atualizar Dados</h3>
+                                    <p>
+                                        Com esse formulário você pode atualizar suas informações.
+                                    </p>
+                                    <form action="" method="POST" novalidate="novalidate" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="control-group mb-1">
+                                            <label for="password">Nome da ONG<sup class="text-danger">*</sup></label>
+                                            <input type="text" value="{{ dado.nome }}" class="form-control" name="nome" placeholder="Nome" required="required" data-validation-required-message="Digite seu nome" />
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                        <div class="control-group mb-1">
+                                            <label for="password">E-mail da ONG<sup class="text-danger">*</sup></label>
+                                            <input type="email" value="{{ dado.email }}" class="form-control" name="email" placeholder="E-mail" required="required" data-validation-required-message="Digite seu e-mail" />
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                        <div class="control-group mb-1">
+                                            <label for="password">CNPJ da ONG<sup class="text-danger">*</sup></label>
+                                            <input type="text" value="{{ dado.cnpj }}" class="form-control" name="CNPJ" placeholder="CNPJ" maxlength="14" required="required" data-validation-required-message="Digite seu CNPJ" />
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                        <div class="control-group mb-1">
+                                            <label for="tel">Telefone para contato com doadores<sup class="text-danger">*</sup></label>
+                                            <input type="tel" value="{{ dado.telefone }}" class="form-control" name="telefone" maxlength="14" placeholder="Telefone" required="required" data-validation-required-message="Digite seu telefone" />
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                        <div class="control-group mb-1">
+                                            <textarea class="form-control" maxlength="175" name="descricao" id="descricao" placeholder="Descreva um pouco suas atividades..." required="required" data-validation-required-message="Descreva um pouco suas atividades.">
+                                                {{ dado.descricao }}
+                                            </textarea>
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-custom" type="submit" id="sendMessageButton">Confirmar</button>
+                                        </div>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Event End -->
+
+
+        <!-- Footer Start -->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-contact">
+                            <h2>Nossa Sede</h2>
+                            <p><i class="fa fa-map-marker-alt"></i>123 Rua, Cidade, País</p>
+                            <p><i class="fa fa-phone-alt"></i>+333 333 33333</p>
+                            <p><i class="fa fa-envelope"></i>info@example.com</p>
+                            <div class="footer-social">
+                                <a class="btn btn-custom" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-youtube"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-custom" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container copyright">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>&copy; <a href="#">Projeto Vida</a>, All Right Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+        
+        <!-- Back to top button -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <!-- Pre Loader -->
+        <div id="loader" class="show">
+            <div class="loader"></div>
+        </div>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+        <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+        <script src="{% static 'lib/parallax/parallax.min.js' %}"></script>
+        
+        <!-- Contact Javascript File -->
+        <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
+        <script src="{% static 'mail/contact.js' %}"></script>
+
+        <!-- Template Javascript -->
+        <script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>

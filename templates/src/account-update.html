@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load bootstrap %}
 {% block title %}Projeto Vida - Concluir cadastro.{% endblock title %}
 {% block content %}
 <main class="container">
@@ -7,8 +7,10 @@
         <div class="col-12 mx-auto">
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form|crispy }}
+                {{ form|bootstrap }}
+                <br>
                 <button type="submit" class="btn btn-md btn-success">Finalizar</button>
+                <a href="{% url 'painel' %}" class="btn btn-md btn-danger">Cancelar</a>
             </form>
         </div>
     </section>
