@@ -1,0 +1,1 @@
+web: gunicorn projeto_vida.wsgi --log-file -
