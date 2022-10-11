@@ -116,63 +116,69 @@ class Painel(LoginRequiredMixin, View):
         return render(request, 'src/painel.html', {'dado': dados})
     
     def post(self, request):
-
-        # Alterar apenas a LOGO.
-        if(len(request.FILES) != 0):
-            # Salva a Logo Nova.
-            logo = request.FILES.get('logo')
-            # Instânciar o usuário.
-            user = User.objects.get(pk=request.user.pk)
-            # Adicionar nova Logo
-            user.logo = logo
-            # Salvar os dados.
-            user.save()
-            # Retorna ao painel.
-            messages.success(request, 'Conta atualizada com sucesso.')
-            return redirect('painel')
-
-        # Verificar se os dados são do usuário conectado.
+        
+        # Instânciar o usuário.
         user = User.objects.get(pk=request.user.pk)
-        if(request.user.nome == request.POST.get('nome')):
-            messages.warning(request, 'Você está usando esse nome!')
-            return redirect('painel')
-        else:
-            user.nome=request.POST.get('nome')
+        if(request.POST.get('trocar_logo') == 'sim'):
             
-        if(request.user.email == request.POST.get('email')):
-            messages.warning(request, 'Você está usando esse e-mail!')
-            return redirect('painel')
+            # Alterar apenas a LOGO.
+            if(len(request.FILES) != 0):
+                
+                # Salva a Logo Nova.
+                logo = request.FILES.get('logo')
+                
+                # Remover antiga logo
+                if(os.remove('{}{}'.format(BASE_DIR, user.logo.url))):
+                    user.logo = logo
+                else:
+                    user.logo = logo
+                user.save()
         else:
-            user.email=request.POST.get('email')
+
+            if(user.nome == request.POST.get('nome')):
+                messages.warning(request, 'Você não modificou o nome.')
+                return redirect('painel')
+
+            if(user.email == request.POST.get('email')):
+                messages.warning(request, 'Você não modificiou o e-mail.')
+                return redirect('painel')
+
+            if(user.cnpj == request.POST.get('CNPJ')):
+                messages.warning(request, 'Você não modificou o CNPJ.')
+                return redirect('painel')
+
+            if(user.telefone == request.POST.get('telefone')):
+                messages.warning(request, 'Você não modificou o Telefone.')
+                return redirect('painel')
+
+            if(len(request.POST.get('descricao')) == 0):
+                messages.warning(request, 'A descrição não pode ser vazia.')
+                return redirect('painel')
             
-        if(request.user.telefone == request.POST.get('telefone')):
-            messages.warning(request, 'Você está usando esse Telefone!')
-            return redirect('painel')
-        else:
-            user.telefone=request.POST.get('telefone')
+            # Caso correto.
+            user.nome = request.POST.get('nome')
+            user.email = request.POST.get('email')
+            user.telefone = request.POST.get('telefone')
+            user.cnpj = request.POST.get('CNPJ')
+            user.descricao = request.POST.get('descricao')
+            user.save()
 
-        if(request.user.cnpj == request.POST.get('cnpj')):
-            messages.warning(request, 'Você está usando esse CNPJ!')
-            return redirect('painel')
-        else:
-            user.cnpj=request.POST.get('cnpj')
-
-        user.save()
-        messages.success(request, 'Conta atualizada com sucesso!')
+            messages.success(request, 'Conta atualizada com sucesso!')
+        
         return redirect('painel')
 
 # Conta update
 class ContaUpdate(LoginRequiredMixin, UpdateView):
 
     model = User
-    fields = ['nome', 'email', 'cpf', 'cnpj', 'telefone', 'logo']
+    fields = ['nome', 'email', 'cpf', 'cnpj', 'telefone']
     template_name = 'src/account-update.html'
     success_url = reverse_lazy('painel')
 
     def form_valid(self, form):
+
         # Remover imagem.
         user = User.objects.get(pk=self.request.user.pk)
-        old_image = user.logo
         user.is_org = True
 
         # Verificar se a imagem já existe no banco de dados.

@@ -128,38 +128,64 @@
                                     <p>
                                         Com esse formulário você pode atualizar suas informações.
                                     </p>
-                                    <form action="" method="POST" novalidate="novalidate" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <div class="control-group mb-1">
-                                            <label for="password">Nome da ONG<sup class="text-danger">*</sup></label>
-                                            <input type="text" value="{{ dado.nome }}" class="form-control" name="nome" placeholder="Nome" required="required" data-validation-required-message="Digite seu nome" />
-                                            <p class="help-block text-danger"></p>
+                                    <br>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <form action="" method="POST" novalidate="novalidate">
+                                                {% csrf_token %}
+                                                <div class="control-group mb-1">
+                                                    <label for="password">Nome da ONG<sup class="text-danger">*</sup></label>
+                                                    <input type="text" value="{{ dado.nome }}" class="form-control" name="nome" placeholder="Nome" required="required" data-validation-required-message="Digite seu nome" />
+                                                    <p class="help-block text-danger"></p>
+                                                </div>
+                                                <div class="control-group mb-1">
+                                                    <label for="password">E-mail da ONG<sup class="text-danger">*</sup></label>
+                                                    <input type="email" value="{{ dado.email }}" class="form-control" name="email" placeholder="E-mail" required="required" data-validation-required-message="Digite seu e-mail" />
+                                                    <p class="help-block text-danger"></p>
+                                                </div>
+                                                <div class="control-group mb-1">
+                                                    <label for="password">CNPJ da ONG<sup class="text-danger">*</sup></label>
+                                                    <input type="text" value="{{ dado.cnpj }}" class="form-control" name="CNPJ" placeholder="CNPJ" maxlength="14" required="required" data-validation-required-message="Digite seu CNPJ" />
+                                                    <p class="help-block text-danger"></p>
+                                                </div>
+                                                <div class="control-group mb-1">
+                                                    <label for="tel">Telefone para contato com doadores<sup class="text-danger">*</sup></label>
+                                                    <input type="tel" value="{{ dado.telefone }}" class="form-control" name="telefone" maxlength="14" placeholder="Telefone" required="required" data-validation-required-message="Digite seu telefone" />
+                                                    <p class="help-block text-danger"></p>
+                                                </div>
+                                                <div class="control-group mb-1">
+                                                    <textarea class="form-control" maxlength="175" name="descricao" id="descricao" placeholder="Descreva um pouco suas atividades..." required="required" data-validation-required-message="Descreva um pouco suas atividades.">
+                                                        {{ dado.descricao }}
+                                                    </textarea>
+                                                    <p class="help-block text-danger"></p>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-custom" type="submit" id="sendMessageButton">Confirmar</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div class="control-group mb-1">
-                                            <label for="password">E-mail da ONG<sup class="text-danger">*</sup></label>
-                                            <input type="email" value="{{ dado.email }}" class="form-control" name="email" placeholder="E-mail" required="required" data-validation-required-message="Digite seu e-mail" />
-                                            <p class="help-block text-danger"></p>
+                                        <div class="col-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <label for="atual">Logo atual</label>
+                                                    <img src="{{ dado.logo.url }}" alt="" id="atual" class="card-img-top">
+                                                </div>
+                                            </div>
+                                            <form action="" method="POST" novalidate="novalidate" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="logo">Altere sua logo</label>
+                                                    <input type="file" name="logo" id="logo">
+                                                    <input type="hidden" name="trocar_logo" value="sim">
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-custom" type="submit" id="sendMessageButton">Confirmar</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div class="control-group mb-1">
-                                            <label for="password">CNPJ da ONG<sup class="text-danger">*</sup></label>
-                                            <input type="text" value="{{ dado.cnpj }}" class="form-control" name="CNPJ" placeholder="CNPJ" maxlength="14" required="required" data-validation-required-message="Digite seu CNPJ" />
-                                            <p class="help-block text-danger"></p>
-                                        </div>
-                                        <div class="control-group mb-1">
-                                            <label for="tel">Telefone para contato com doadores<sup class="text-danger">*</sup></label>
-                                            <input type="tel" value="{{ dado.telefone }}" class="form-control" name="telefone" maxlength="14" placeholder="Telefone" required="required" data-validation-required-message="Digite seu telefone" />
-                                            <p class="help-block text-danger"></p>
-                                        </div>
-                                        <div class="control-group mb-1">
-                                            <textarea class="form-control" maxlength="175" name="descricao" id="descricao" placeholder="Descreva um pouco suas atividades..." required="required" data-validation-required-message="Descreva um pouco suas atividades.">
-                                                {{ dado.descricao }}
-                                            </textarea>
-                                            <p class="help-block text-danger"></p>
-                                        </div>
-                                        <div>
-                                            <button class="btn btn-custom" type="submit" id="sendMessageButton">Confirmar</button>
-                                        </div>
-                                    </form>
+                                    </div>
+                                    
                                     {% endif %}
                                 </div>
                             </div>
