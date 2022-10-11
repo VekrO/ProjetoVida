@@ -104,15 +104,9 @@ class Painel(LoginRequiredMixin, View):
 
     def get(self, request):
 
-        # Verificar se a conta tem logo.
-        user = User.objects.get(pk=request.user.pk)
-        if(user.logo):
-            if(user.logo.name == 'fotos/default.jpg'):
-                # Adicionar uma mensagem para que o usuário possa atualizar a imagem dele.
-                return render(request, 'src/painel.html', {'message': 'Você está usando a imagem padrão de logo, coloque outra!'})
-
         # Receber dados.
         dados = User.objects.get(pk=request.user.pk)
+        print('teste')
         return render(request, 'src/painel.html', {'dado': dados})
     
     def post(self, request):
@@ -126,13 +120,9 @@ class Painel(LoginRequiredMixin, View):
                 
                 # Salva a Logo Nova.
                 logo = request.FILES.get('logo')
-                
-                # Remover antiga logo
-                if(os.remove('{}{}'.format(BASE_DIR, user.logo.url))):
-                    user.logo = logo
-                else:
-                    user.logo = logo
+                user.logo = logo
                 user.save()
+            
         else:
 
             if(user.nome == request.POST.get('nome')):
@@ -151,11 +141,10 @@ class Painel(LoginRequiredMixin, View):
                 messages.warning(request, 'Você não modificou o Telefone.')
                 return redirect('painel')
 
-            if(len(request.POST.get('descricao')) == 0):
+            if(len(str(request.POST.get('descricao'))) == 0):
                 messages.warning(request, 'A descrição não pode ser vazia.')
                 return redirect('painel')
-            
-            # Caso correto.
+
             user.nome = request.POST.get('nome')
             user.email = request.POST.get('email')
             user.telefone = request.POST.get('telefone')
