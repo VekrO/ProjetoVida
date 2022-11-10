@@ -1,9 +1,10 @@
-!{% load static %}
+{% load bootstrap %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>HELPZ - Free Charity Website Template</title>
+        <title>Projeto Vida - Faça o registro da sua ONG</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Free Website Template" name="keywords">
         <meta content="Free Website Template" name="description">
@@ -60,16 +61,21 @@
         <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
-                <a href="index.html" class="navbar-brand">Helpz</a>
+                <a href="index.html" class="navbar-brand">Projeto Vida</a>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav ml-auto">
-                        <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
+                        <a href="{% url 'index' %}" class="nav-item nav-link">Início</a>
+                        <a href="#about" class="nav-item nav-link">Sobre</a>
+                        <a href="#blog" class="nav-item nav-link">Blog</a>
+                        <a href="#contact" class="nav-item nav-link">Contato</a>
+                        <a href="{% url 'login' %}" class="nav-item nav-link">Login de ONG</a>
                     </div>
                 </div>
+
             </div>
         </div>
         <!-- Nav Bar End -->
@@ -80,11 +86,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h2>Blog</h2>
+                        <h2>Registro da ONG</h2>
                     </div>
                     <div class="col-12">
-                        <a href="">Home</a>
-                        <a href="">Blog</a>
+                        <a href="">Início</a>
+                        <a href="">Registro da ONG</a>
                     </div>
                 </div>
             </div>
@@ -92,53 +98,32 @@
         <!-- Page Header End -->
         
         
-        <!-- Blog Start -->
-        <div class="blog">
+        <!-- Contact Start -->
+        <div class="contact">
             <div class="container">
-                {% if request.user.is_authenticated %}
-                <h1>Postagem nova</h1>
-                <hr>
-                <form action="" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" name="title" placeholder="Título da postagem" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <textarea type="text" name="title" placeholder="Descrição da postagem" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="file">Imagem</label>
-                        <input type="file" id="file" name="file" class="form-control p-1">
-                    </div>
-                    <button class="btn btn-success btn-md">Publicar</button>
-                </form>
-                {% endif %}
-                <br>
                 <div class="section-header text-center">
-                    <p>Nosso Blog</p>
-                    <h2>Notícias e Novidades sobre as Ongs</h2>
+                    <p>Vamos criar uma conta para sua ONG</p>
+                    <h2>Informações Da ONG</h2>
                 </div>
-                <div class="row">
-                    {% for dado in dados %}
-                    <div class="card-group">
-                        <div class="card m-2">
-                            <div class="card-body text-center">
-                                <img src="{{ dado.imagem.url }}" alt="" style="width: 125px;" class="img-card-top mb-4">
-                                <h3 class="card-title"><a href="">{{ dado.title }}</a></h3>
-                                <small>Autor: {{ dado.user }}</small>
-                                {% if request.user == dado.user %}
-                                <br>
-                                <br>
-                                <a href="{% url 'editBlog' dado.pk %}" class="btn btn-warning btn-sm">Editar</a>
-                                <a href="{% url 'deleteBlog' dado.pk %}" class="btn btn-danger btn-sm">Deletar</a>
-                                {% endif %}
+                <div class="contact-img">
+                    <img src="{% static 'img/contact.jpg' %}" alt="Image">
+                </div>
+                <div class="contact-form">
+                        {% for message in messages %}
+                        <div id="success" class="alert {{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                        <form action="" method="POST" novalidate="novalidate" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <p>Tem certeza que deseja deletar a postagem com o título "{{ object }}"?</p>
+                            {{ form|bootstrap }}
+                            <div>
+                                <button class="btn btn-custom" type="submit" id="sendMessageButton">Confirmar</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    {% endfor %}
             </div>
         </div>
-        <!-- Blog End -->
+        <!-- Contact End -->
 
 
         <!-- Footer Start -->
@@ -147,9 +132,9 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-contact">
-                            <h2>Our Head Office</h2>
-                            <p><i class="fa fa-map-marker-alt"></i>123 Street, New York, USA</p>
-                            <p><i class="fa fa-phone-alt"></i>+012 345 67890</p>
+                            <h2>Nossa Sede</h2>
+                            <p><i class="fa fa-map-marker-alt"></i>123 Rua, Cidade, País</p>
+                            <p><i class="fa fa-phone-alt"></i>+333 333 33333</p>
                             <p><i class="fa fa-envelope"></i>info@example.com</p>
                             <div class="footer-social">
                                 <a class="btn btn-custom" href=""><i class="fab fa-twitter"></i></a>
@@ -160,45 +145,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-link">
-                            <h2>Popular Links</h2>
-                            <a href="">About Us</a>
-                            <a href="">Contact Us</a>
-                            <a href="">Popular Causes</a>
-                            <a href="">Upcoming Events</a>
-                            <a href="">Latest Blog</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-link">
-                            <h2>Useful Links</h2>
-                            <a href="">Terms of use</a>
-                            <a href="">Privacy policy</a>
-                            <a href="">Cookies</a>
-                            <a href="">Help</a>
-                            <a href="">FQAs</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-newsletter">
-                            <h2>Newsletter</h2>
-                            <form>
-                                <input class="form-control" placeholder="Email goes here">
-                                <button class="btn btn-custom">Submit</button>
-                                <label>Don't worry, we don't spam!</label>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="container copyright">
                 <div class="row">
-                    <div class="col-md-6">
-                        <p>&copy; <a href="#">Your Site Name</a>, All Right Reserved.</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                    <div class="col-md-12">
+                        <p>&copy; <a href="#">Projeto Vida</a>, All Right Reserved.</p>
                     </div>
                 </div>
             </div>

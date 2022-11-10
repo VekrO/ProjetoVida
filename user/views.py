@@ -54,6 +54,7 @@ class Registro(View):
                 user.email = email
                 user.cnpj = cnpj
                 user.telefone = telefone
+                user.logo = 'default.jpg'
                 user.set_password(password)
                 user.save()
 
@@ -106,13 +107,16 @@ class Painel(LoginRequiredMixin, View):
 
         # Receber dados.
         dados = User.objects.get(pk=request.user.pk)
-        print('teste')
         return render(request, 'src/painel.html', {'dado': dados})
     
     def post(self, request):
         
         # Instânciar o usuário.
         user = User.objects.get(pk=request.user.pk)
+        if(request.POST.get('remover_logo') == 'sim'):
+            user.logo = 'default.jpg'
+            user.save()
+
         if(request.POST.get('trocar_logo') == 'sim'):
             
             # Alterar apenas a LOGO.
@@ -127,22 +131,6 @@ class Painel(LoginRequiredMixin, View):
 
             if(user.nome == request.POST.get('nome')):
                 messages.warning(request, 'Você não modificou o nome.')
-                return redirect('painel')
-
-            if(user.email == request.POST.get('email')):
-                messages.warning(request, 'Você não modificiou o e-mail.')
-                return redirect('painel')
-
-            if(user.cnpj == request.POST.get('CNPJ')):
-                messages.warning(request, 'Você não modificou o CNPJ.')
-                return redirect('painel')
-
-            if(user.telefone == request.POST.get('telefone')):
-                messages.warning(request, 'Você não modificou o Telefone.')
-                return redirect('painel')
-
-            if(len(str(request.POST.get('descricao'))) == 0):
-                messages.warning(request, 'A descrição não pode ser vazia.')
                 return redirect('painel')
 
             user.nome = request.POST.get('nome')
@@ -180,3 +168,4 @@ class ContaUpdate(LoginRequiredMixin, UpdateView):
         
         messages.success(self.request, 'Conta atualizada com sucesso!')
         return super().form_valid(form)
+
